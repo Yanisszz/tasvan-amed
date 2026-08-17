@@ -61,11 +61,11 @@ header.nav.scrolled .nav-links{color:var(--ink-soft)}
 .hero-stage{position:absolute;inset:-6%;z-index:-3;transform-style:preserve-3d;will-change:transform}
 .hero-bg{position:absolute;inset:0;
   background:url('assets/aerial-1.jpg') center/cover no-repeat;
-  transform:scale(1.32);filter:brightness(.78) saturate(1.12) blur(4px);
-  animation:heroLand 2.6s cubic-bezier(.2,.7,.2,1) .15s forwards;will-change:transform,filter}
-@keyframes heroLand{to{transform:scale(1.1);filter:brightness(.98) saturate(1.18) blur(0)}}
-.hero-bg.settled{animation:heroDrift 22s ease-in-out infinite alternate}
-@keyframes heroDrift{from{transform:scale(1.12) translate(0,0)}to{transform:scale(1.2) translate(-2%,-1.5%)}}
+  transform:scale(1.06);filter:brightness(.96) saturate(1.12) blur(2px);
+  animation:heroLand 2.1s cubic-bezier(.2,.7,.2,1) .15s both;will-change:transform,filter}
+@keyframes heroLand{from{transform:scale(1.14);filter:brightness(.74) saturate(1.08) blur(7px)}to{transform:scale(1.06);filter:brightness(.96) saturate(1.12) blur(2px)}}
+.hero-bg.settled{animation:heroDrift 30s ease-in-out infinite alternate}
+@keyframes heroDrift{from{transform:scale(1.06)}to{transform:scale(1.1)}}
 .hero-veil{position:absolute;inset:0;z-index:-2;background:linear-gradient(95deg,rgba(10,30,24,.82) 0%,rgba(12,34,27,.5) 34%,rgba(12,34,27,.14) 62%,rgba(12,34,27,.06) 100%),linear-gradient(180deg,rgba(10,30,24,.35) 0%,transparent 22%,transparent 62%,rgba(10,30,24,.5) 100%)}
 .hero-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
   background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.06) 0,transparent 12%),radial-gradient(circle at 70% 60%,rgba(255,255,255,.05) 0,transparent 14%)}
@@ -122,7 +122,7 @@ section{padding:6.5rem 0}
 .compare{display:grid;gap:.9rem}
 .compare .row{background:var(--ivory);border-radius:16px;padding:1.3rem 1.5rem;border:1px solid var(--line);display:flex;gap:1.1rem;align-items:flex-start}
 .compare .row .ic{width:32px;height:32px;border-radius:9px;flex:none;display:grid;place-items:center;font-weight:700;font-size:.9rem}
-.compare .bad .ic{background:rgba(89,100,92,.14);color:var(--sage)}
+.compare .bad .ic{background:rgba(192,58,43,.12);color:#c0392b;font-size:1rem}
 .compare .good{border-color:rgba(24,58,46,.28);background:linear-gradient(180deg,var(--paper),#f0f5f0)}
 .compare .good .ic{background:var(--forest);color:#fff}
 .compare h4{font-family:'Manrope';font-weight:700;font-size:1rem;margin-bottom:.15rem}
@@ -248,6 +248,42 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .villa-body .btn{margin-top:auto;width:100%}
 @media(max-width:820px){.villa-grid{grid-template-columns:1fr}}
 
+/* MASTERPLAN / LOTS */
+.plan{background:var(--ivory)}
+.plan-layout{display:grid;grid-template-columns:.82fr 1.18fr;gap:2.4rem;align-items:start;margin-top:2.6rem}
+.plan-map{border-radius:18px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-soft);background:#fff;position:sticky;top:92px}
+.plan-map img{width:100%;display:block}
+.plan-map .cap{padding:.7rem 1rem;font-family:'Manrope';font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border-top:1px solid var(--line)}
+.lot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:.55rem;margin-bottom:1.6rem}
+.lot{aspect-ratio:1;border-radius:11px;border:1.5px solid var(--line);background:var(--paper);font-family:'Fraunces';font-size:1.1rem;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:transform .18s,box-shadow .18s,background .18s;position:relative}
+.lot[data-type=loft]{border-color:rgba(189,106,73,.45)}
+.lot[data-type=villa]{border-color:rgba(24,58,46,.4)}
+.lot:hover{transform:translateY(-3px);box-shadow:var(--shadow-soft)}
+.lot[data-type=loft].active{background:var(--clay);color:#fff;border-color:var(--clay)}
+.lot[data-type=villa].active{background:var(--forest);color:#fff;border-color:var(--forest)}
+.lot .dot{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;border:1.5px solid var(--paper)}
+.lot .dot.ok{background:#1f9e78}
+.lot .dot.opt{background:#d59a2e}
+.lot .dot.no{background:#c0392b}
+.lot.active .dot{border-color:rgba(255,255,255,.6)}
+.lot-card{background:var(--paper);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-soft)}
+.lot-card .media{aspect-ratio:16/10;overflow:hidden;position:relative}
+.lot-card .media img{width:100%;height:100%;object-fit:cover;transition:opacity .25s}
+.lot-card .lotno{position:absolute;top:1rem;left:1rem;background:rgba(16,42,33,.9);color:#fff;font-family:'Fraunces';font-size:1rem;padding:.35rem .8rem;border-radius:100px}
+.lot-card .avail{position:absolute;top:1rem;right:1rem;font-family:'Manrope';font-weight:700;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:.4rem .8rem;border-radius:100px;color:#fff}
+.avail.ok{background:#1f9e78}.avail.opt{background:#d59a2e}.avail.no{background:#b0473b}
+.lot-card .body{padding:1.7rem}
+.lot-card .body h3{font-size:1.55rem;font-weight:400;margin-bottom:.2rem}
+.lot-card .body .surf{color:var(--ink-soft);font-size:.92rem;margin-bottom:1rem}
+.lot-card .body .price{font-family:'Fraunces';font-size:2rem;color:var(--forest);margin-bottom:1.2rem}
+.lot-card .body .price span{font-size:.85rem;color:var(--ink-soft);font-family:'Manrope'}
+.plan-legend{display:flex;flex-wrap:wrap;gap:1.2rem 2rem;justify-content:center;margin-top:2.2rem;font-size:.88rem;color:var(--ink-soft)}
+.plan-legend span{display:inline-flex;align-items:center;gap:.5rem}
+.plan-legend i{width:14px;height:14px;border-radius:4px;display:inline-block}
+.plan-legend i.loft{background:var(--clay)}.plan-legend i.villa{background:var(--forest)}
+.plan-legend i.d-ok{background:#1f9e78;border-radius:50%}.plan-legend i.d-no{background:#c0392b;border-radius:50%}
+@media(max-width:820px){.plan-layout{grid-template-columns:1fr}.plan-map{position:static}}
+
 /* RETURNS + TIMELINE */
 .returns{background:var(--forest);color:#fff}
 .returns .section-head p{color:rgba(255,255,255,.78)}
@@ -358,6 +394,7 @@ footer p{font-size:.92rem;line-height:1.6}
     <nav class="nav-links">
       <a href="#pourquoi">Pourquoi Amed</a>
       <a href="#villas">Les villas</a>
+      <a href="#plan">Plan des lots</a>
       <a href="#video">Vidéo</a>
       <a href="#rentabilite">Rentabilité</a>
       <a href="#faq">FAQ</a>
@@ -415,8 +452,8 @@ footer p{font-size:.92rem;line-height:1.6}
       <span class="eyebrow">Le constat</span>
       <h2 style="font-size:clamp(1.9rem,3.8vw,2.8rem);margin:1rem 0 1.7rem;font-weight:400">Ton épargne dort pendant que Bali, elle, se développe vers l'Est.</h2>
       <div class="compare">
-        <div class="row bad"><div class="ic">—</div><div><h4>Livret &amp; compte courant</h4><p>Un rendement grignoté par l'inflation. Ton capital perd du pouvoir d'achat pendant qu'il « dort ».</p></div></div>
-        <div class="row bad"><div class="ic">—</div><div><h4>Le sud de Bali, déjà saturé</h4><p>Prix envolés, foule, marché mûr. Le vrai potentiel d'entrée précoce est ailleurs.</p></div></div>
+        <div class="row bad"><div class="ic">✕</div><div><h4>Livret &amp; compte courant</h4><p>Un rendement grignoté par l'inflation. Ton capital perd du pouvoir d'achat pendant qu'il « dort ».</p></div></div>
+        <div class="row bad"><div class="ic">✕</div><div><h4>Le sud de Bali, déjà saturé</h4><p>Prix envolés, foule, marché mûr. Le vrai potentiel d'entrée précoce est ailleurs.</p></div></div>
         <div class="row good"><div class="ic">✓</div><div><h4>Amed, la côte Est qui monte</h4><p>Une destination émergente, authentique, à fort potentiel. Tasvan construit, loue et gère <b>toute ta villa</b> — toi, tu encaisses.</p></div></div>
       </div>
     </div>
@@ -539,8 +576,8 @@ footer p{font-size:.92rem;line-height:1.6}
   <div class="wrap">
     <div class="section-head center reveal">
       <span class="eyebrow">En vidéo</span>
-      <h2>Découvre Tasvan Amed en vidéo</h2>
-      <p>Le site, les vues sur l'océan, les villas : vois de tes yeux la côte Est de Bali.</p>
+      <h2>Découvre Amed en vidéo</h2>
+      <p>Vois de tes yeux la côte Est de Bali et pourquoi investir là-bas.</p>
     </div>
     <div class="video-frame reveal" id="videoFrame" data-yt="fFmBvDKHWf4">
       <img class="thumb" src="assets/video-thumb.jpg" alt="Aperçu vidéo Tasvan Amed">
@@ -595,6 +632,33 @@ footer p{font-size:.92rem;line-height:1.6}
             <li>Vue mer 180°</li>
           </ul>
           <a href="#quiz" class="btn btn-primary">Cette villa m'intéresse</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MASTERPLAN / LOTS -->
+<section class="plan" id="plan">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Le plan des lots</span>
+      <h2>Choisis ton lot à Tasvan Amed</h2>
+      <p>64 lots en tout — 36 Loft &amp; 28 Villas 2 chambres. Survole un numéro pour voir le type, le prix et la disponibilité.</p>
+    </div>
+    <div class="plan-layout">
+      <div class="plan-map reveal">
+        <img src="assets/masterplan.jpg" alt="Plan directeur Tasvan Amed">
+        <div class="cap">Plan directeur · Tasvan Amed, Amed</div>
+      </div>
+      <div class="reveal">
+        <div class="lot-grid" id="lotGrid"></div>
+        <div class="lot-card" id="lotCard"></div>
+        <div class="plan-legend">
+          <span><i class="loft"></i> Loft 1 chambre</span>
+          <span><i class="villa"></i> Villa 2 chambres</span>
+          <span><i class="d-ok"></i> Disponible</span>
+          <span><i class="d-no"></i> Réservé</span>
         </div>
       </div>
     </div>
@@ -752,9 +816,9 @@ addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
   hero.addEventListener('mouseleave',()=>{tx=0;ty=0;if(!raf)raf=requestAnimationFrame(loop);});
   function loop(){
     cx+=(tx-cx)*.08;cy+=(ty-cy)*.08;
-    stage.style.transform=`translate3d(${cx*-26}px,${cy*-20}px,0) rotateX(${cy*4}deg) rotateY(${cx*-6}deg)`;
+    stage.style.transform=`translate3d(${cx*-13}px,${cy*-10}px,0) rotateX(${cy*2}deg) rotateY(${cx*-3}deg)`;
     const grid=hero.querySelector('.hero-grid');
-    if(grid)grid.style.transform=`translate3d(${cx*14}px,${cy*10}px,0)`;
+    if(grid)grid.style.transform=`translate3d(${cx*7}px,${cy*5}px,0)`;
     if(Math.abs(tx-cx)>.001||Math.abs(ty-cy)>.001){raf=requestAnimationFrame(loop);}else{raf=null;}
   }
 })();
@@ -792,6 +856,43 @@ function calc(){
   document.getElementById('resGuar').textContent=fmt(guar);
 }
 cap.addEventListener('input',calc);calc();
+
+/* MASTERPLAN — lots interactifs */
+(function(){
+  const grid=document.getElementById('lotGrid'),card=document.getElementById('lotCard');
+  if(!grid||!card)return;
+  const T={
+    loft:{name:'Loft — 1 chambre',price:'89 990 €',note:'au lieu de 99 900 €',surf:'41,4 m² · terrain 56 m² · piscine privée',img:'assets/1br-3.jpg'},
+    villa:{name:'Villa — 2 chambres',price:'139 900 €',note:'au lieu de 149 900 €',surf:'67 m² · terrain 78 m² · piscine privée',img:'assets/2br-5.jpg'}
+  };
+  const A={ok:{cls:'ok',label:'Disponible'},opt:{cls:'opt',label:'En option'},no:{cls:'no',label:'Réservé'}};
+  /* 64 lots au total : 36 Loft + 28 Villas 2 ch. (source : plan directeur).
+     Répartition type/dispo générée et régulière — À REMPLACER par le vrai mapping par lot.
+     Pour marquer un lot réservé : passe son avail à 'no' (ou 'opt' pour une option). */
+  const TOTAL=64, NB_VILLA=28;
+  const LOTS=[];
+  for(let n=1;n<=TOTAL;n++){
+    const isVilla=(Math.floor(n*NB_VILLA/TOTAL)-Math.floor((n-1)*NB_VILLA/TOTAL))===1;
+    LOTS.push({n,type:isVilla?'villa':'loft',avail:'ok'});
+  }
+  function show(i){
+    const l=LOTS[i],t=T[l.type],a=A[l.avail];
+    card.innerHTML=`<div class="media"><img src="${t.img}" alt="${t.name}"><span class="lotno">Lot ${l.n}</span><span class="avail ${a.cls}">${a.label}</span></div>
+      <div class="body"><h3>${t.name}</h3><div class="surf">${t.surf}</div>
+      <div class="price">${t.price} <span>${t.note}</span></div>
+      <a href="#quiz" class="btn ${l.type==='villa'?'btn-primary':'btn-dark'}" style="width:100%">Réserver le lot ${l.n}</a></div>`;
+    [...grid.children].forEach((c,j)=>c.classList.toggle('active',j===i));
+  }
+  LOTS.forEach((l,i)=>{
+    const b=document.createElement('button');b.className='lot';b.type='button';b.dataset.type=l.type;
+    b.innerHTML=`${l.n}<span class="dot ${A[l.avail].cls}"></span>`;
+    b.addEventListener('mouseenter',()=>show(i));
+    b.addEventListener('focus',()=>show(i));
+    b.addEventListener('click',()=>show(i));
+    grid.appendChild(b);
+  });
+  show(0);
+})();
 
 /* QUIZ */
 const questions=[
