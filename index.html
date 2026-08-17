@@ -255,17 +255,19 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .plan-stage{position:relative;width:2600px;line-height:0}
 .plan-stage img{width:100%;display:block;user-select:none}
 /* zones cliquables = surface de chaque unité */
-.zone{position:absolute;transform:translate(-50%,-50%);border-radius:5px;border:1.5px solid transparent;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;box-sizing:border-box;transition:background .18s,border-color .18s;z-index:2}
-.zone .pin{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:'Manrope';font-weight:700;font-size:.72rem;color:#fff;border:2px solid rgba(255,255,255,.92);box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .15s,background .15s;position:relative}
+.zone{position:absolute;transform:translate(-50%,-50%);border-radius:5px;border:1.5px solid transparent;background:transparent;cursor:pointer;padding:0;box-sizing:border-box;transition:background .18s,border-color .18s;z-index:2}
+.zone .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:'Manrope';font-weight:700;font-size:.72rem;color:#fff;border:2px solid rgba(255,255,255,.92);box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .15s,background .15s}
+.zone.pl .pin{left:24%}
+.zone.pr .pin{left:76%}
 .zone.loft .pin{background:rgba(214,154,46,.96)}
 .zone.villa .pin{background:rgba(70,130,170,.96)}
 .zone:hover{z-index:5}
-.zone:hover .pin{transform:scale(1.18)}
-.zone.sold{background:rgba(192,57,43,.34);border-color:rgba(192,57,43,.8)}
+.zone:hover .pin{transform:translate(-50%,-50%) scale(1.18)}
+.zone.sold{background:rgba(192,57,43,.32);border-color:rgba(192,57,43,.78);pointer-events:none;cursor:default}
 .zone.sold .pin{background:#c0392b}
 .zone.sold .pin::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.92);transform:translate(-50%,-50%) rotate(-45deg)}
 .zone.active{background:rgba(31,158,120,.42);border-color:#1f9e78;box-shadow:0 0 0 2px rgba(31,158,120,.3);z-index:6}
-.zone.active .pin{background:#1f9e78;transform:scale(1.14)}
+.zone.active .pin{background:#1f9e78;transform:translate(-50%,-50%) scale(1.18)}
 .plan-legend{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;justify-content:center;margin:1.4rem 0 0;font-size:.86rem;color:var(--ink-soft)}
 .plan-legend span{display:inline-flex;align-items:center;gap:.5rem}
 .plan-legend i{width:14px;height:14px;border-radius:50%;display:inline-block;position:relative}
@@ -856,22 +858,22 @@ cap.addEventListener('input',calc);calc();
   /* Coordonnées (%) détectées sur le plan directeur. Types réels (bleu=villa, jaune=loft).
      avail : 'ok' = disponible, 'no' = réservé. Modifie ici pour marquer les lots réservés. */
   const LOTS=[
-    {n:1,t:'villa',x:20.87,y:33.56,w:4.7,h:13.06},{n:2,t:'villa',x:20.87,y:49.11,w:4.7,h:13.06},{n:3,t:'villa',x:20.87,y:64.67,w:4.7,h:13.06},{n:4,t:'villa',x:20.87,y:80.22,w:4.7,h:13.06},
-    {n:5,t:'loft',x:25.54,y:35.76,w:2.49,h:17.22},{n:6,t:'loft',x:28.44,y:35.76,w:2.49,h:17.22},{n:7,t:'loft',x:25.54,y:57.28,w:2.49,h:17.22},{n:8,t:'loft',x:28.44,y:57.28,w:2.49,h:17.22},
-    {n:9,t:'loft',x:25.54,y:78.81,w:2.49,h:17.22},{n:10,t:'loft',x:28.44,y:78.81,w:2.49,h:17.22},{n:11,t:'villa',x:33.11,y:32.01,w:4.7,h:13.44},{n:12,t:'villa',x:33.11,y:48.01,w:4.7,h:13.44},
-    {n:13,t:'villa',x:33.11,y:64.0,w:4.7,h:13.44},{n:14,t:'villa',x:33.11,y:80.0,w:4.7,h:13.44},{n:15,t:'loft',x:37.76,y:35.76,w:2.46,h:17.22},{n:16,t:'loft',x:40.62,y:35.76,w:2.46,h:17.22},
-    {n:17,t:'loft',x:37.76,y:57.28,w:2.46,h:17.22},{n:18,t:'loft',x:40.62,y:57.28,w:2.46,h:17.22},{n:19,t:'loft',x:37.76,y:78.81,w:2.46,h:17.22},{n:20,t:'loft',x:40.62,y:78.81,w:2.46,h:17.22},
-    {n:21,t:'villa',x:45.36,y:33.56,w:4.7,h:13.06},{n:22,t:'villa',x:45.36,y:49.11,w:4.7,h:13.06},{n:23,t:'villa',x:45.36,y:64.67,w:4.7,h:13.06},{n:24,t:'villa',x:45.36,y:80.22,w:4.7,h:13.06},
-    {n:25,t:'loft',x:49.99,y:34.42,w:2.48,h:17.27},{n:26,t:'loft',x:52.88,y:34.42,w:2.48,h:17.27},{n:27,t:'loft',x:49.99,y:56.0,w:2.48,h:17.27},{n:28,t:'loft',x:52.88,y:56.0,w:2.48,h:17.27},
-    {n:29,t:'loft',x:49.99,y:77.59,w:2.48,h:17.27},{n:30,t:'loft',x:52.88,y:77.59,w:2.48,h:17.27},{n:31,t:'villa',x:57.62,y:33.56,w:4.67,h:13.06},{n:32,t:'villa',x:57.62,y:49.11,w:4.67,h:13.06},
-    {n:33,t:'villa',x:57.62,y:64.67,w:4.67,h:13.06},{n:34,t:'villa',x:57.62,y:80.22,w:4.67,h:13.06},{n:35,t:'loft',x:62.21,y:35.86,w:2.49,h:17.38},{n:36,t:'loft',x:65.11,y:35.86,w:2.49,h:17.38},
-    {n:37,t:'loft',x:62.21,y:57.58,w:2.49,h:17.38},{n:38,t:'loft',x:65.11,y:57.58,w:2.49,h:17.38},{n:39,t:'loft',x:62.21,y:79.3,w:2.49,h:17.38},{n:40,t:'loft',x:65.11,y:79.3,w:2.49,h:17.38},
-    {n:41,t:'villa',x:69.85,y:33.56,w:4.64,h:13.06},{n:42,t:'villa',x:69.85,y:49.11,w:4.64,h:13.06},{n:43,t:'villa',x:69.85,y:64.67,w:4.64,h:13.06},{n:44,t:'villa',x:69.85,y:80.22,w:4.64,h:13.06},
-    {n:45,t:'loft',x:74.46,y:35.07,w:2.49,h:17.38},{n:46,t:'loft',x:77.36,y:35.07,w:2.49,h:17.38},{n:47,t:'loft',x:74.46,y:56.79,w:2.49,h:17.38},{n:48,t:'loft',x:77.36,y:56.79,w:2.49,h:17.38},
-    {n:49,t:'loft',x:74.46,y:78.51,w:2.49,h:17.38},{n:50,t:'loft',x:77.36,y:78.51,w:2.49,h:17.38},{n:51,t:'villa',x:82.02,y:33.42,w:4.73,h:13.15},{n:52,t:'villa',x:82.02,y:49.06,w:4.73,h:13.15},
-    {n:53,t:'villa',x:82.02,y:64.71,w:4.73,h:13.15},{n:54,t:'villa',x:82.02,y:80.36,w:4.73,h:13.15},{n:55,t:'loft',x:86.76,y:36.06,w:2.48,h:17.38},{n:56,t:'loft',x:89.64,y:36.06,w:2.48,h:17.38},
-    {n:57,t:'loft',x:86.76,y:57.78,w:2.48,h:17.38},{n:58,t:'loft',x:89.64,y:57.78,w:2.48,h:17.38},{n:59,t:'loft',x:86.76,y:79.49,w:2.48,h:17.38},{n:60,t:'loft',x:89.64,y:79.49,w:2.48,h:17.38},
-    {n:61,t:'villa',x:94.24,y:33.42,w:4.75,h:13.48},{n:62,t:'villa',x:94.24,y:49.46,w:4.75,h:13.48},{n:63,t:'villa',x:94.24,y:65.5,w:4.75,h:13.48},{n:64,t:'villa',x:94.24,y:81.55,w:4.75,h:13.48}
+    {n:1,t:'villa',x:20.87,y:33.56,w:4.7,h:13.06,p:'c'},{n:2,t:'villa',x:20.87,y:49.11,w:4.7,h:13.06,p:'c'},{n:3,t:'villa',x:20.87,y:64.67,w:4.7,h:13.06,p:'c'},{n:4,t:'villa',x:20.87,y:80.22,w:4.7,h:13.06,p:'c'},
+    {n:5,t:'loft',x:26.99,y:30.38,w:5.34,h:8.82,p:'l'},{n:6,t:'loft',x:26.99,y:41.14,w:5.34,h:8.82,p:'r'},{n:7,t:'loft',x:26.99,y:51.9,w:5.34,h:8.82,p:'l'},{n:8,t:'loft',x:26.99,y:62.66,w:5.34,h:8.82,p:'r'},
+    {n:9,t:'loft',x:26.99,y:73.43,w:5.34,h:8.82,p:'l'},{n:10,t:'loft',x:26.99,y:84.19,w:5.34,h:8.82,p:'r'},{n:11,t:'villa',x:33.11,y:32.01,w:4.7,h:13.44,p:'c'},{n:12,t:'villa',x:33.11,y:48.01,w:4.7,h:13.44,p:'c'},
+    {n:13,t:'villa',x:33.11,y:64.0,w:4.7,h:13.44,p:'c'},{n:14,t:'villa',x:33.11,y:80.0,w:4.7,h:13.44,p:'c'},{n:15,t:'loft',x:39.19,y:30.38,w:5.25,h:8.82,p:'l'},{n:16,t:'loft',x:39.19,y:41.14,w:5.25,h:8.82,p:'r'},
+    {n:17,t:'loft',x:39.19,y:51.9,w:5.25,h:8.82,p:'l'},{n:18,t:'loft',x:39.19,y:62.66,w:5.25,h:8.82,p:'r'},{n:19,t:'loft',x:39.19,y:73.43,w:5.25,h:8.82,p:'l'},{n:20,t:'loft',x:39.19,y:84.19,w:5.25,h:8.82,p:'r'},
+    {n:21,t:'villa',x:45.36,y:33.56,w:4.7,h:13.06,p:'c'},{n:22,t:'villa',x:45.36,y:49.11,w:4.7,h:13.06,p:'c'},{n:23,t:'villa',x:45.36,y:64.67,w:4.7,h:13.06,p:'c'},{n:24,t:'villa',x:45.36,y:80.22,w:4.7,h:13.06,p:'c'},
+    {n:25,t:'loft',x:51.44,y:29.02,w:5.31,h:8.85,p:'l'},{n:26,t:'loft',x:51.44,y:39.81,w:5.31,h:8.85,p:'r'},{n:27,t:'loft',x:51.44,y:50.61,w:5.31,h:8.85,p:'l'},{n:28,t:'loft',x:51.44,y:61.4,w:5.31,h:8.85,p:'r'},
+    {n:29,t:'loft',x:51.44,y:72.19,w:5.31,h:8.85,p:'l'},{n:30,t:'loft',x:51.44,y:82.99,w:5.31,h:8.85,p:'r'},{n:31,t:'villa',x:57.62,y:33.56,w:4.67,h:13.06,p:'c'},{n:32,t:'villa',x:57.62,y:49.11,w:4.67,h:13.06,p:'c'},
+    {n:33,t:'villa',x:57.62,y:64.67,w:4.67,h:13.06,p:'c'},{n:34,t:'villa',x:57.62,y:80.22,w:4.67,h:13.06,p:'c'},{n:35,t:'loft',x:63.66,y:30.43,w:5.34,h:8.9,p:'l'},{n:36,t:'loft',x:63.66,y:41.29,w:5.34,h:8.9,p:'r'},
+    {n:37,t:'loft',x:63.66,y:52.15,w:5.34,h:8.9,p:'l'},{n:38,t:'loft',x:63.66,y:63.01,w:5.34,h:8.9,p:'r'},{n:39,t:'loft',x:63.66,y:73.87,w:5.34,h:8.9,p:'l'},{n:40,t:'loft',x:63.66,y:84.73,w:5.34,h:8.9,p:'r'},
+    {n:41,t:'villa',x:69.85,y:33.56,w:4.64,h:13.06,p:'c'},{n:42,t:'villa',x:69.85,y:49.11,w:4.64,h:13.06,p:'c'},{n:43,t:'villa',x:69.85,y:64.67,w:4.64,h:13.06,p:'c'},{n:44,t:'villa',x:69.85,y:80.22,w:4.64,h:13.06,p:'c'},
+    {n:45,t:'loft',x:75.91,y:29.64,w:5.34,h:8.9,p:'l'},{n:46,t:'loft',x:75.91,y:40.5,w:5.34,h:8.9,p:'r'},{n:47,t:'loft',x:75.91,y:51.36,w:5.34,h:8.9,p:'l'},{n:48,t:'loft',x:75.91,y:62.22,w:5.34,h:8.9,p:'r'},
+    {n:49,t:'loft',x:75.91,y:73.08,w:5.34,h:8.9,p:'l'},{n:50,t:'loft',x:75.91,y:83.94,w:5.34,h:8.9,p:'r'},{n:51,t:'villa',x:82.02,y:33.42,w:4.73,h:13.15,p:'c'},{n:52,t:'villa',x:82.02,y:49.06,w:4.73,h:13.15,p:'c'},
+    {n:53,t:'villa',x:82.02,y:64.71,w:4.73,h:13.15,p:'c'},{n:54,t:'villa',x:82.02,y:80.36,w:4.73,h:13.15,p:'c'},{n:55,t:'loft',x:88.2,y:30.63,w:5.31,h:8.9,p:'l'},{n:56,t:'loft',x:88.2,y:41.49,w:5.31,h:8.9,p:'r'},
+    {n:57,t:'loft',x:88.2,y:52.35,w:5.31,h:8.9,p:'l'},{n:58,t:'loft',x:88.2,y:63.21,w:5.31,h:8.9,p:'r'},{n:59,t:'loft',x:88.2,y:74.06,w:5.31,h:8.9,p:'l'},{n:60,t:'loft',x:88.2,y:84.92,w:5.31,h:8.9,p:'r'},
+    {n:61,t:'villa',x:94.24,y:33.42,w:4.75,h:13.48,p:'c'},{n:62,t:'villa',x:94.24,y:49.46,w:4.75,h:13.48,p:'c'},{n:63,t:'villa',x:94.24,y:65.5,w:4.75,h:13.48,p:'c'},{n:64,t:'villa',x:94.24,y:81.55,w:4.75,h:13.48,p:'c'}
   ];
   /* Lots vendus (≈50 % — mix Loft & Villa). Édite cette liste pour mettre à jour les ventes. */
   const SOLD=new Set([1,3,4,12,14,22,23,31,33,42,44,52,61,63, 5,7,8,10,16,18,20,25,27,29,35,38,40,46,48,50,56,59]);
@@ -917,11 +919,11 @@ cap.addEventListener('input',calc);calc();
   }
   LOTS.forEach(l=>{
     const b=document.createElement('button');
-    b.className='zone '+l.t+(l.avail==='sold'?' sold':'');b.type='button';
+    b.className='zone '+l.t+' p'+l.p+(l.avail==='sold'?' sold':'');b.type='button';
     b.style.left=l.x+'%';b.style.top=l.y+'%';b.style.width=l.w+'%';b.style.height=l.h+'%';
     b.innerHTML='<span class="pin">'+l.n+'</span>';
     b.title='Lot '+l.n+' — '+T[l.t].name+(l.avail==='sold'?' (vendu)':' (disponible)');
-    b.addEventListener('click',()=>select(l,b));
+    if(l.avail!=='sold') b.addEventListener('click',()=>select(l,b));
     wrap.appendChild(b);
   });
   let di=LOTS.findIndex(l=>l.avail!=='sold'); if(di<0)di=0;
