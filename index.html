@@ -254,14 +254,18 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .plan-viewport::-webkit-scrollbar-thumb{background:var(--clay-soft);border-radius:9px}
 .plan-stage{position:relative;width:2600px;line-height:0}
 .plan-stage img{width:100%;display:block;user-select:none}
-.hot{position:absolute;transform:translate(-50%,-50%);width:30px;height:30px;border-radius:50%;border:2px solid rgba(255,255,255,.9);cursor:pointer;display:grid;place-items:center;font-family:'Manrope';font-weight:700;font-size:.72rem;color:#fff;transition:transform .15s,box-shadow .15s,background .15s;padding:0;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-.hot.loft{background:rgba(214,154,46,.9)}
-.hot.villa{background:rgba(70,130,170,.92)}
-.hot:hover{transform:translate(-50%,-50%) scale(1.25);z-index:5}
-.hot.active{background:#1f9e78;box-shadow:0 0 0 4px rgba(31,158,120,.35),0 3px 10px rgba(0,0,0,.35);transform:translate(-50%,-50%) scale(1.3);z-index:6}
-.hot.sold{background:rgba(192,57,43,.92);text-decoration:line-through;opacity:.92}
-.hot.sold::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.9);transform:translate(-50%,-50%) rotate(-45deg)}
-.hot.sold.active{background:#c0392b;box-shadow:0 0 0 4px rgba(192,57,43,.35),0 3px 10px rgba(0,0,0,.35);transform:translate(-50%,-50%) scale(1.3);z-index:6}
+/* zones cliquables = surface de chaque unité */
+.zone{position:absolute;transform:translate(-50%,-50%);border-radius:5px;border:1.5px solid transparent;background:transparent;cursor:pointer;padding:0;display:grid;place-items:center;box-sizing:border-box;transition:background .18s,border-color .18s;z-index:2}
+.zone .pin{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:'Manrope';font-weight:700;font-size:.72rem;color:#fff;border:2px solid rgba(255,255,255,.92);box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .15s,background .15s;position:relative}
+.zone.loft .pin{background:rgba(214,154,46,.96)}
+.zone.villa .pin{background:rgba(70,130,170,.96)}
+.zone:hover{background:rgba(255,255,255,.16);border-color:rgba(255,255,255,.75);z-index:5}
+.zone:hover .pin{transform:scale(1.14)}
+.zone.sold{background:rgba(192,57,43,.34);border-color:rgba(192,57,43,.8)}
+.zone.sold .pin{background:#c0392b}
+.zone.sold .pin::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.92);transform:translate(-50%,-50%) rotate(-45deg)}
+.zone.active{background:rgba(31,158,120,.42);border-color:#1f9e78;box-shadow:0 0 0 2px rgba(31,158,120,.3);z-index:6}
+.zone.active .pin{background:#1f9e78;transform:scale(1.14)}
 .plan-legend{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;justify-content:center;margin:1.4rem 0 0;font-size:.86rem;color:var(--ink-soft)}
 .plan-legend span{display:inline-flex;align-items:center;gap:.5rem}
 .plan-legend i{width:14px;height:14px;border-radius:50%;display:inline-block;position:relative}
@@ -852,19 +856,22 @@ cap.addEventListener('input',calc);calc();
   /* Coordonnées (%) détectées sur le plan directeur. Types réels (bleu=villa, jaune=loft).
      avail : 'ok' = disponible, 'no' = réservé. Modifie ici pour marquer les lots réservés. */
   const LOTS=[
-    {n:1,t:'villa',x:20.61,y:32.88},{n:2,t:'villa',x:20.61,y:48.86},{n:3,t:'villa',x:20.61,y:65.89},{n:4,t:'villa',x:20.61,y:82.13},
-    {n:5,t:'loft',x:25.43,y:29.33},{n:6,t:'loft',x:28.51,y:39.94},{n:7,t:'loft',x:25.43,y:51.37},{n:8,t:'loft',x:28.51,y:61.81},{n:9,t:'loft',x:25.43,y:73.23},{n:10,t:'loft',x:28.51,y:83.52},
-    {n:11,t:'villa',x:32.9,y:32.89},{n:12,t:'villa',x:32.9,y:51.37},{n:13,t:'villa',x:32.9,y:67.53},{n:14,t:'villa',x:32.9,y:83.52},
-    {n:15,t:'loft',x:37.7,y:29.34},{n:16,t:'loft',x:40.79,y:39.96},{n:17,t:'loft',x:37.7,y:51.39},{n:18,t:'loft',x:40.79,y:61.82},{n:19,t:'loft',x:37.75,y:73.25},{n:20,t:'loft',x:40.84,y:83.55},
-    {n:21,t:'villa',x:45.2,y:32.88},{n:22,t:'villa',x:45.2,y:48.87},{n:23,t:'villa',x:45.2,y:65.9},{n:24,t:'villa',x:45.2,y:83.51},
-    {n:25,t:'loft',x:50.15,y:29.33},{n:26,t:'loft',x:52.91,y:39.96},{n:27,t:'loft',x:50.15,y:51.38},{n:28,t:'loft',x:52.91,y:61.82},{n:29,t:'loft',x:50.14,y:73.24},{n:30,t:'loft',x:52.91,y:83.52},
-    {n:31,t:'villa',x:57.33,y:32.89},{n:32,t:'villa',x:57.33,y:48.87},{n:33,t:'villa',x:57.33,y:64.97},{n:34,t:'villa',x:57.33,y:80.93},
-    {n:35,t:'loft',x:62.96,y:29.35},{n:36,t:'loft',x:65.37,y:39.96},{n:37,t:'loft',x:62.96,y:51.38},{n:38,t:'loft',x:65.36,y:61.82},{n:39,t:'loft',x:62.96,y:72.1},{n:40,t:'loft',x:65.36,y:83.55},
-    {n:41,t:'villa',x:69.77,y:32.88},{n:42,t:'villa',x:69.77,y:48.87},{n:43,t:'villa',x:69.77,y:65.9},{n:44,t:'villa',x:69.77,y:80.92},
-    {n:45,t:'loft',x:75.4,y:29.33},{n:46,t:'loft',x:77.6,y:39.95},{n:47,t:'loft',x:75.4,y:51.38},{n:48,t:'loft',x:77.59,y:62.8},{n:49,t:'loft',x:75.39,y:73.24},{n:50,t:'loft',x:77.6,y:83.56},
-    {n:51,t:'villa',x:81.72,y:32.89},{n:52,t:'villa',x:81.72,y:48.87},{n:53,t:'villa',x:81.72,y:65.92},{n:54,t:'villa',x:81.72,y:81.9},
-    {n:55,t:'loft',x:87.61,y:29.34},{n:56,t:'loft',x:90.04,y:40.75},{n:57,t:'loft',x:87.61,y:50.4},{n:58,t:'loft',x:90.04,y:61.82},{n:59,t:'loft',x:87.61,y:72.14},{n:60,t:'loft',x:89.38,y:81.94},
-    {n:61,t:'villa',x:94.45,y:32.88},{n:62,t:'villa',x:94.45,y:48.89},{n:63,t:'villa',x:94.45,y:64.96},{n:64,t:'villa',x:94.46,y:81.91}
+    {n:1,t:'villa',x:20.61,y:32.88,w:4.5,h:14.62},{n:2,t:'villa',x:20.61,y:48.86,w:4.5,h:14.62},{n:3,t:'villa',x:20.61,y:65.89,w:4.5,h:14.62},{n:4,t:'villa',x:20.61,y:82.13,w:4.5,h:14.62},
+    {n:5,t:'loft',x:25.43,y:29.33,w:3.14,h:19.76},{n:6,t:'loft',x:28.51,y:39.94,w:3.14,h:19.61},{n:7,t:'loft',x:25.43,y:51.37,w:3.14,h:19.76},{n:8,t:'loft',x:28.51,y:61.81,w:3.14,h:19.61},
+    {n:9,t:'loft',x:25.43,y:73.23,w:3.14,h:19.76},{n:10,t:'loft',x:28.51,y:83.52,w:3.14,h:19.61},{n:11,t:'villa',x:32.9,y:32.89,w:4.5,h:14.54},{n:12,t:'villa',x:32.9,y:51.37,w:4.5,h:14.54},
+    {n:13,t:'villa',x:32.9,y:67.53,w:4.5,h:14.54},{n:14,t:'villa',x:32.9,y:83.52,w:4.5,h:14.54},{n:15,t:'loft',x:37.7,y:29.34,w:3.15,h:19.76},{n:16,t:'loft',x:40.79,y:39.96,w:3.15,h:19.62},
+    {n:17,t:'loft',x:37.7,y:51.39,w:3.15,h:19.76},{n:18,t:'loft',x:40.79,y:61.82,w:3.1,h:19.62},{n:19,t:'loft',x:37.75,y:73.25,w:3.1,h:19.76},{n:20,t:'loft',x:40.84,y:83.55,w:3.15,h:19.62},
+    {n:21,t:'villa',x:45.2,y:32.88,w:4.5,h:15.33},{n:22,t:'villa',x:45.2,y:48.87,w:4.5,h:15.33},{n:23,t:'villa',x:45.2,y:65.9,w:4.5,h:15.33},{n:24,t:'villa',x:45.2,y:83.51,w:4.5,h:15.33},
+    {n:25,t:'loft',x:50.15,y:29.33,w:2.82,h:19.76},{n:26,t:'loft',x:52.91,y:39.96,w:2.82,h:19.6},{n:27,t:'loft',x:50.15,y:51.38,w:2.82,h:19.76},{n:28,t:'loft',x:52.91,y:61.82,w:2.82,h:19.6},
+    {n:29,t:'loft',x:50.14,y:73.24,w:2.83,h:19.76},{n:30,t:'loft',x:52.91,y:83.52,w:2.83,h:19.6},{n:31,t:'villa',x:57.33,y:32.89,w:4.5,h:14.38},{n:32,t:'villa',x:57.33,y:48.87,w:4.5,h:14.38},
+    {n:33,t:'villa',x:57.33,y:64.97,w:4.5,h:14.38},{n:34,t:'villa',x:57.33,y:80.93,w:4.5,h:14.38},{n:35,t:'loft',x:62.96,y:29.35,w:2.46,h:19.24},{n:36,t:'loft',x:65.37,y:39.96,w:2.46,h:19.62},
+    {n:37,t:'loft',x:62.96,y:51.38,w:2.45,h:19.24},{n:38,t:'loft',x:65.36,y:61.82,w:2.45,h:19.62},{n:39,t:'loft',x:62.96,y:72.1,w:2.45,h:19.24},{n:40,t:'loft',x:65.36,y:83.55,w:2.45,h:19.62},
+    {n:41,t:'villa',x:69.77,y:32.88,w:4.5,h:14.39},{n:42,t:'villa',x:69.77,y:48.87,w:4.5,h:14.39},{n:43,t:'villa',x:69.77,y:65.9,w:4.5,h:14.39},{n:44,t:'villa',x:69.77,y:80.92,w:4.5,h:14.39},
+    {n:45,t:'loft',x:75.4,y:29.33,w:2.24,h:19.76},{n:46,t:'loft',x:77.6,y:39.95,w:2.24,h:19.62},{n:47,t:'loft',x:75.4,y:51.38,w:2.23,h:19.76},{n:48,t:'loft',x:77.59,y:62.8,w:2.23,h:19.62},
+    {n:49,t:'loft',x:75.39,y:73.24,w:2.24,h:19.76},{n:50,t:'loft',x:77.6,y:83.56,w:2.25,h:19.62},{n:51,t:'villa',x:81.72,y:32.89,w:4.5,h:14.38},{n:52,t:'villa',x:81.72,y:48.87,w:4.5,h:14.38},
+    {n:53,t:'villa',x:81.72,y:65.92,w:4.5,h:14.38},{n:54,t:'villa',x:81.72,y:81.9,w:4.5,h:14.38},{n:55,t:'loft',x:87.61,y:29.34,w:2.48,h:19.26},{n:56,t:'loft',x:90.04,y:40.75,w:2.48,h:18.54},
+    {n:57,t:'loft',x:87.61,y:50.4,w:2.48,h:19.26},{n:58,t:'loft',x:90.04,y:61.82,w:2.48,h:18.54},{n:59,t:'loft',x:87.61,y:72.14,w:1.81,h:19.26},{n:60,t:'loft',x:89.38,y:81.94,w:1.81,h:18.54},
+    {n:61,t:'villa',x:94.45,y:32.88,w:4.5,h:14.46},{n:62,t:'villa',x:94.45,y:48.89,w:4.5,h:14.46},{n:63,t:'villa',x:94.45,y:64.96,w:4.5,h:14.46},{n:64,t:'villa',x:94.46,y:81.91,w:4.5,h:14.46}
   ];
   /* Lots vendus (≈50 % — mix Loft & Villa). Édite cette liste pour mettre à jour les ventes. */
   const SOLD=new Set([1,3,4,12,14,22,23,31,33,42,44,52,61,63, 5,7,8,10,16,18,20,25,27,29,35,38,40,46,48,50,56,59]);
@@ -910,8 +917,10 @@ cap.addEventListener('input',calc);calc();
   }
   LOTS.forEach(l=>{
     const b=document.createElement('button');
-    b.className='hot '+l.t+(l.avail==='sold'?' sold':'');b.type='button';b.style.left=l.x+'%';b.style.top=l.y+'%';
-    b.textContent=l.n;b.title='Lot '+l.n+' — '+T[l.t].name+(l.avail==='sold'?' (vendu)':' (disponible)');
+    b.className='zone '+l.t+(l.avail==='sold'?' sold':'');b.type='button';
+    b.style.left=l.x+'%';b.style.top=l.y+'%';b.style.width=l.w+'%';b.style.height=l.h+'%';
+    b.innerHTML='<span class="pin">'+l.n+'</span>';
+    b.title='Lot '+l.n+' — '+T[l.t].name+(l.avail==='sold'?' (vendu)':' (disponible)');
     b.addEventListener('click',()=>select(l,b));
     wrap.appendChild(b);
   });
