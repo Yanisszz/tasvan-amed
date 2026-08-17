@@ -61,39 +61,40 @@ header.nav.scrolled .nav-links{color:var(--ink-soft)}
 .hero-stage{position:absolute;inset:-6%;z-index:-3;transform-style:preserve-3d;will-change:transform}
 .hero-bg{position:absolute;inset:0;
   background:url('assets/aerial-1.jpg') center/cover no-repeat;
-  transform:scale(1.06);filter:brightness(.96) saturate(1.12) blur(2px);
-  animation:heroLand 2.1s cubic-bezier(.2,.7,.2,1) .15s both;will-change:transform,filter}
-@keyframes heroLand{from{transform:scale(1.14);filter:brightness(.74) saturate(1.08) blur(7px)}to{transform:scale(1.06);filter:brightness(.96) saturate(1.12) blur(2px)}}
-.hero-bg.settled{animation:heroDrift 30s ease-in-out infinite alternate}
-@keyframes heroDrift{from{transform:scale(1.06)}to{transform:scale(1.1)}}
+  transform:scale(1.07);filter:brightness(.98) saturate(1.14) blur(2px);
+  animation:heroArrive 4.2s cubic-bezier(.19,.64,.22,1) both;will-change:transform}
+@keyframes heroArrive{0%{transform:scale(1.32) translate3d(3%,-3.5%,0)}100%{transform:scale(1.07) translate3d(0,0,0)}}
+.hero-bg.settled{animation:heroDrift 40s linear infinite alternate}
+@keyframes heroDrift{from{transform:scale(1.07) translate3d(0,0,0)}to{transform:scale(1.12) translate3d(-1.5%,-1%,0)}}
 .hero-veil{position:absolute;inset:0;z-index:-2;background:linear-gradient(95deg,rgba(10,30,24,.82) 0%,rgba(12,34,27,.5) 34%,rgba(12,34,27,.14) 62%,rgba(12,34,27,.06) 100%),linear-gradient(180deg,rgba(10,30,24,.35) 0%,transparent 22%,transparent 62%,rgba(10,30,24,.5) 100%)}
 .hero-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;mix-blend-mode:overlay;
   background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.06) 0,transparent 12%),radial-gradient(circle at 70% 60%,rgba(255,255,255,.05) 0,transparent 14%)}
-/* intro sky flash */
-.hero-clouds{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(circle at 50% 42%,rgba(255,255,255,.95),rgba(232,240,244,.9) 30%,rgba(180,205,215,.6) 55%,transparent 78%);
-  animation:cloudPart 2.4s ease-in forwards;will-change:transform,opacity}
-@keyframes cloudPart{0%{opacity:1;transform:scale(1)}70%{opacity:.5}100%{opacity:0;transform:scale(2.6)}}
+/* intro : la scène émerge de l'obscurité (fondu doux, uniquement l'opacité — fluide) */
+.hero-clouds{position:absolute;inset:0;z-index:4;pointer-events:none;
+  background:radial-gradient(130% 130% at 50% 42%,rgba(8,22,17,0) 0%,rgba(8,22,17,.15) 48%,rgba(8,22,17,.7) 82%,rgba(8,22,17,.95) 100%),rgba(8,22,17,.6);
+  animation:introLift 3s cubic-bezier(.4,0,.15,1) forwards;will-change:opacity}
+@keyframes introLift{0%{opacity:1}100%{opacity:0}}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center;position:relative;z-index:6}
 .hero h1{font-size:clamp(2.5rem,4.8vw,4rem);margin:1.4rem 0;font-weight:400;line-height:1.06;text-shadow:0 2px 34px rgba(0,0,0,.45)}
 .hero h1 em{font-style:italic;color:var(--clay-soft)}
 .hero h1 .w{display:inline-block;animation:wordUp .9s cubic-bezier(.2,.8,.2,1) both}
 @keyframes wordUp{from{opacity:0;transform:translateY(1.1em) rotate(3deg)}to{opacity:1;transform:none}}
-.hero .lede,.hero .tag,.hero-cta,.hero .eyebrow{opacity:0;animation:fadeUp .9s ease forwards}
-.hero .eyebrow{animation-delay:.2s}
-.hero .lede{animation-delay:1.5s}
-.hero .tag{animation-delay:1.7s}
-.hero-cta{animation-delay:1.9s}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.hero .lede,.hero .tag,.hero-cta,.hero .eyebrow{opacity:0;animation:fadeUp 1s cubic-bezier(.2,.7,.2,1) forwards}
+.hero .eyebrow{animation-delay:2.5s}
+.hero .lede{animation-delay:3.15s}
+.hero .tag{animation-delay:3.4s}
+.hero-cta{animation-delay:3.65s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 .hero .lede{font-size:1.2rem;max-width:35ch;color:rgba(255,255,255,.9);font-weight:500}
 .hero .tag{font-family:'Fraunces';font-style:italic;font-size:1.3rem;margin-top:1.5rem;color:rgba(255,255,255,.95)}
 .hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2.3rem}
 .hero .eyebrow{color:var(--clay-soft)}
 .hero .eyebrow::before{background:var(--clay-soft)}
-.scroll-cue{position:absolute;left:50%;bottom:2rem;transform:translateX(-50%);z-index:6;color:rgba(255,255,255,.8);font-family:'Manrope';font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:0;animation:fadeUp .9s ease 2.3s forwards}
+.scroll-cue{position:absolute;left:50%;bottom:2rem;transform:translateX(-50%);z-index:6;color:rgba(255,255,255,.8);font-family:'Manrope';font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.7rem;opacity:0;animation:fadeUp 1s ease 4.2s forwards}
 .scroll-cue .mouse{width:24px;height:38px;border:1.5px solid rgba(255,255,255,.6);border-radius:14px;position:relative}
 .scroll-cue .mouse::after{content:"";position:absolute;top:7px;left:50%;width:3px;height:7px;border-radius:3px;background:#fff;transform:translateX(-50%);animation:wheel 1.6s ease-in-out infinite}
 @keyframes wheel{0%{opacity:0;transform:translate(-50%,0)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,12px)}}
-.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(20px);border-radius:var(--radius);padding:1.9rem;transform:translateZ(0);opacity:0;animation:cardIn 1s cubic-bezier(.2,.8,.2,1) 1.6s forwards;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.hero-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(20px);border-radius:var(--radius);padding:1.9rem;transform:translateZ(0);opacity:0;animation:cardIn 1.1s cubic-bezier(.2,.8,.2,1) 3.05s forwards;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
 @keyframes cardIn{from{opacity:0;transform:translateY(30px) rotateY(-8deg)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.hero-bg{animation:none;transform:scale(1.08);filter:none}.hero-clouds{display:none}.hero h1 .w,.hero .lede,.hero .tag,.hero-cta,.hero .eyebrow,.hero-card,.scroll-cue{animation:none;opacity:1;transform:none}}
 .hero-card h4{font-family:'Manrope';font-weight:700;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-soft);margin-bottom:1.3rem}
@@ -261,10 +262,15 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .hot.villa{background:rgba(70,130,170,.92)}
 .hot:hover{transform:translate(-50%,-50%) scale(1.25);z-index:5}
 .hot.active{background:#1f9e78;box-shadow:0 0 0 4px rgba(31,158,120,.35),0 3px 10px rgba(0,0,0,.35);transform:translate(-50%,-50%) scale(1.3);z-index:6}
+.hot.sold{background:rgba(192,57,43,.92);text-decoration:line-through;opacity:.92}
+.hot.sold::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.9);transform:translate(-50%,-50%) rotate(-45deg)}
+.hot.sold.active{background:#c0392b;box-shadow:0 0 0 4px rgba(192,57,43,.35),0 3px 10px rgba(0,0,0,.35);transform:translate(-50%,-50%) scale(1.3);z-index:6}
 .plan-legend{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;justify-content:center;margin:1.4rem 0 0;font-size:.86rem;color:var(--ink-soft)}
 .plan-legend span{display:inline-flex;align-items:center;gap:.5rem}
-.plan-legend i{width:14px;height:14px;border-radius:50%;display:inline-block}
+.plan-legend i{width:14px;height:14px;border-radius:50%;display:inline-block;position:relative}
 .plan-legend i.loft{background:#d69a2e}.plan-legend i.villa{background:#4682aa}.plan-legend i.sel{background:#1f9e78}
+.plan-legend i.vendu{background:#c0392b}
+.plan-legend i.vendu::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:#fff;transform:translate(-50%,-50%) rotate(-45deg)}
 /* Detail panel */
 .lot-panel{display:grid;grid-template-columns:1.05fr .95fr;gap:0;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:var(--shadow);margin-top:2rem}
 .carousel{position:relative;background:#0e211a;min-height:340px}
@@ -663,6 +669,7 @@ footer p{font-size:.92rem;line-height:1.6}
     <div class="plan-legend reveal">
       <span><i class="loft"></i> Loft — 1 chambre</span>
       <span><i class="villa"></i> Villa — 2 chambres</span>
+      <span><i class="vendu"></i> Vendu</span>
       <span><i class="sel"></i> Unité sélectionnée</span>
     </div>
     <div class="lot-panel reveal" id="lotPanel"></div>
@@ -798,13 +805,13 @@ addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40));
     }else if(c.nodeType===1){walk(c);}
   });};
   walk(t);
-  document.querySelectorAll('#heroTitle .w').forEach((w,i)=>w.style.animationDelay=(.5+i*.09)+'s');
+  document.querySelectorAll('#heroTitle .w').forEach((w,i)=>w.style.animationDelay=(2.65+i*.07)+'s');
 })();
 
 /* HERO — atterrissage puis dérive lente */
 (function(){
   const bg=document.getElementById('heroBg');if(!bg)return;
-  bg.addEventListener('animationend',e=>{if(e.animationName==='heroLand')bg.classList.add('settled');});
+  bg.addEventListener('animationend',e=>{if(e.animationName==='heroArrive')bg.classList.add('settled');});
 })();
 
 /* HERO — parallaxe 3D à la souris */
@@ -882,7 +889,9 @@ cap.addEventListener('input',calc);calc();
     {n:55,t:'loft',x:87.61,y:29.34},{n:56,t:'loft',x:90.04,y:40.75},{n:57,t:'loft',x:87.61,y:50.4},{n:58,t:'loft',x:90.04,y:61.82},{n:59,t:'loft',x:87.61,y:72.14},{n:60,t:'loft',x:89.38,y:81.94},
     {n:61,t:'villa',x:94.45,y:32.88},{n:62,t:'villa',x:94.45,y:48.89},{n:63,t:'villa',x:94.45,y:64.96},{n:64,t:'villa',x:94.46,y:81.91}
   ];
-  LOTS.forEach(l=>{if(!l.avail)l.avail='ok';});
+  /* Lots vendus (≈50 % — mix Loft & Villa). Édite cette liste pour mettre à jour les ventes. */
+  const SOLD=new Set([1,3,4,12,14,22,23,31,33,42,44,52,61,63, 5,7,8,10,16,18,20,25,27,29,35,38,40,46,48,50,56,59]);
+  LOTS.forEach(l=>{l.avail=SOLD.has(l.n)?'sold':'ok';});
   const T={
     loft:{name:'Loft — 1 chambre',price:'89 990 €',note:'au lieu de 99 900 €',
       specs:['41,4 m² construits','Terrain 56 m²','1 chambre · séjour','Cuisine équipée','Piscine privée à débordement','Vue mer 180°'],
@@ -893,7 +902,7 @@ cap.addEventListener('input',calc);calc();
   };
   let curLot=null, ci=0;
   function renderPanel(l){
-    const t=T[l.t], av=l.avail==='no';
+    const t=T[l.t], sold=l.avail==='sold';
     panel.innerHTML=`
       <div class="carousel" id="carousel">
         <span class="kind">${t.name}</span>
@@ -905,10 +914,10 @@ cap.addEventListener('input',calc);calc();
       <div class="lot-detail">
         <div class="no">Lot ${l.n} · Tasvan Amed</div>
         <h3>${t.name}</h3>
-        <span class="avail ${av?'no':'ok'}"><span class="d"></span>${av?'Réservé':'Disponible'}</span>
+        <span class="avail ${sold?'no':'ok'}"><span class="d"></span>${sold?'Vendu':'Disponible'}</span>
         <div class="price">${t.price} <span>${t.note}</span></div>
         <ul class="lot-specs">${t.specs.map(s=>`<li>${s}</li>`).join('')}</ul>
-        <a href="#quiz" class="btn ${l.t==='villa'?'btn-primary':'btn-dark'}" style="width:100%">${av?'Être alerté si le lot '+l.n+' se libère':'Réserver le lot '+l.n}</a>
+        <a href="#quiz" class="btn ${sold?'btn-dark':(l.t==='villa'?'btn-primary':'btn-dark')}" style="width:100%">${sold?'Être recontacté pour un lot disponible':'Réserver le lot '+l.n}</a>
       </div>`;
     ci=0;
     const slides=[...panel.querySelectorAll('.slide')],dots=[...panel.querySelectorAll('.count i')];
@@ -924,12 +933,13 @@ cap.addEventListener('input',calc);calc();
   }
   LOTS.forEach(l=>{
     const b=document.createElement('button');
-    b.className='hot '+l.t;b.type='button';b.style.left=l.x+'%';b.style.top=l.y+'%';
-    b.textContent=l.n;b.title='Lot '+l.n+' — '+T[l.t].name;
+    b.className='hot '+l.t+(l.avail==='sold'?' sold':'');b.type='button';b.style.left=l.x+'%';b.style.top=l.y+'%';
+    b.textContent=l.n;b.title='Lot '+l.n+' — '+T[l.t].name+(l.avail==='sold'?' (vendu)':' (disponible)');
     b.addEventListener('click',()=>select(l,b));
     wrap.appendChild(b);
   });
-  select(LOTS[0],wrap.children[0]);
+  let di=LOTS.findIndex(l=>l.avail!=='sold'); if(di<0)di=0;
+  select(LOTS[di],wrap.children[di]);
 })();
 
 /* QUIZ */
