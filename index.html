@@ -920,9 +920,10 @@ cap.addEventListener('input',calc);calc();
   LOTS.forEach(l=>{
     const b=document.createElement('button');
     b.className='zone '+l.t+' p'+l.p+(l.avail==='sold'?' sold':'');b.type='button';
-    b.style.left=l.x+'%';b.style.top=l.y+'%';b.style.width=l.w+'%';b.style.height=l.h+'%';
+    b.style.left=l.x+'%';b.style.top=l.y+'%';b.style.width=(l.w*1.08).toFixed(2)+'%';b.style.height=(l.h*1.08).toFixed(2)+'%';
     b.innerHTML='<span class="pin">'+l.n+'</span>';
     b.title='Lot '+l.n+' — '+T[l.t].name+(l.avail==='sold'?' (vendu)':' (disponible)');
+    b.addEventListener('mousedown',e=>e.preventDefault()); /* évite le scroll de focus (décalage) */
     if(l.avail!=='sold') b.addEventListener('click',()=>select(l,b));
     wrap.appendChild(b);
   });
