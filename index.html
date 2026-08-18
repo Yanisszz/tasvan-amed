@@ -265,12 +265,12 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .zone.loft .pin{background:rgba(214,154,46,.96)}
 .zone.villa .pin{background:rgba(70,130,170,.96)}
 .zone:hover{z-index:5}
-.zone:hover .pin{transform:translate(-50%,-50%) scale(1.18)}
+.zone:hover .pin{box-shadow:0 0 0 3px rgba(255,255,255,.55),0 2px 8px rgba(0,0,0,.4)}
 .zone.sold{background:rgba(192,57,43,.32);border-color:rgba(192,57,43,.78);pointer-events:none;cursor:default}
 .zone.sold .pin{background:#c0392b}
 .zone.sold .pin::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.92);transform:translate(-50%,-50%) rotate(-45deg)}
 .zone.active{background:rgba(31,158,120,.42);border-color:#1f9e78;box-shadow:0 0 0 2px rgba(31,158,120,.3);z-index:6}
-.zone.active .pin{background:#1f9e78;transform:translate(-50%,-50%) scale(1.18)}
+.zone.active .pin{background:#1f9e78;box-shadow:0 0 0 3px rgba(31,158,120,.55),0 2px 8px rgba(0,0,0,.4)}
 .plan-legend{display:flex;flex-wrap:wrap;gap:1rem 1.8rem;justify-content:center;margin:1.4rem 0 0;font-size:.86rem;color:var(--ink-soft)}
 .plan-legend span{display:inline-flex;align-items:center;gap:.5rem}
 .plan-legend i{width:14px;height:14px;border-radius:50%;display:inline-block;position:relative}
