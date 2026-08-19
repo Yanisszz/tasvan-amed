@@ -264,7 +264,8 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .zone.pr .pin{left:76%}
 .zone.zt-loft .pin{background:rgba(214,154,46,.96)}
 .zone.zt-villa .pin{background:rgba(70,130,170,.96)}
-/* aucun effet au survol : rien ne bouge */
+.zone:hover{z-index:5}
+.zone:hover .pin{transform:translate(-50%,-50%) scale(1.2)}
 .zone.sold{background:rgba(192,57,43,.32);border-color:rgba(192,57,43,.78);pointer-events:none;cursor:default}
 .zone.sold .pin{background:#c0392b}
 .zone.sold .pin::after{content:"";position:absolute;left:50%;top:50%;width:130%;height:2px;background:rgba(255,255,255,.92);transform:translate(-50%,-50%) rotate(-45deg)}
