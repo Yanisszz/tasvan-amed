@@ -262,8 +262,8 @@ blockquote{font-family:'Fraunces';font-style:italic;font-size:1.55rem;line-heigh
 .zone .pin{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:'Manrope';font-weight:700;font-size:.72rem;color:#fff;border:2px solid rgba(255,255,255,.92);box-shadow:0 2px 6px rgba(0,0,0,.35);transition:transform .15s,background .15s}
 .zone.pl .pin{left:24%}
 .zone.pr .pin{left:76%}
-.zone.loft .pin{background:rgba(214,154,46,.96)}
-.zone.villa .pin{background:rgba(70,130,170,.96)}
+.zone.zt-loft .pin{background:rgba(214,154,46,.96)}
+.zone.zt-villa .pin{background:rgba(70,130,170,.96)}
 /* aucun effet au survol : rien ne bouge */
 .zone.sold{background:rgba(192,57,43,.32);border-color:rgba(192,57,43,.78);pointer-events:none;cursor:default}
 .zone.sold .pin{background:#c0392b}
@@ -921,7 +921,7 @@ cap.addEventListener('input',calc);calc();
   }
   LOTS.forEach(l=>{
     const b=document.createElement('div'); /* div (non focusable) : pas de scroll de focus au clic/tap */
-    b.className='zone '+l.t+' p'+l.p+(l.avail==='sold'?' sold':'');
+    b.className='zone zt-'+l.t+' p'+l.p+(l.avail==='sold'?' sold':'');
     b.setAttribute('role','button');
     b.style.left=l.x+'%';b.style.top=l.y+'%';b.style.width=(l.w*1.08).toFixed(2)+'%';b.style.height=(l.h*1.08).toFixed(2)+'%';
     b.innerHTML='<span class="pin">'+l.n+'</span>';
